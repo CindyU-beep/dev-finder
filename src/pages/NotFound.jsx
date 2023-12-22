@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { FaHome } from "react-icons/fa";
 
 function NotFound() {
 const [dogs, setDogs] = useState([]);
@@ -11,7 +13,7 @@ useEffect(() => {
     };
 
     fetchDog();
-    const interval = setInterval(fetchDog, 2000); // Fetch new dog images every 2 secs
+    const interval = setInterval(fetchDog, 3000); // Fetch new dog images every 3 secs
 
     return () => clearInterval(interval); // Clean up the interval on unmount
 }, []);
@@ -23,12 +25,15 @@ return (
             <p className='text-2xl'>Oops! It seems like the page you're looking for doesn't exist.</p>
             <p className='text-2xl'>But don't worry, we've got some cute dogs to keep you company!</p>
         </div>
-
         <div className='flex justify-center mt-8'>
             {dogs.map((dog, index) => (
                 <img key={index} src={dog} alt='Dog' className='w-64 h-64 mx-2' />
             ))}
         </div>
+        <Link to='/' className='btn btn-neutral btn-lg mt-10'>
+            <FaHome/>
+                Go back home
+                </Link>
     </div>
 );
 }
