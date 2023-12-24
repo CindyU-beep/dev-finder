@@ -10,6 +10,7 @@ export const GithubProvider = ({ children }) => {
     const initialState = {
         users: [],
         user: {},
+        repos: [],
         loading: false
     }
     const [state, dispatch] = useReducer(GithubReducer, initialState)
@@ -54,7 +55,7 @@ export const GithubProvider = ({ children }) => {
             window.location = '/not-found'
         } else {
             const data = await reponse.json()
-            //dispatch is a function that we can use to dispatch objects to the reducer
+
             dispatch({
                 type: 'GET_USER',
                 payload: data
@@ -62,13 +63,35 @@ export const GithubProvider = ({ children }) => {
         }
     }
 
+    // Get User Repos
+    //fetch repos for a single user from GitHub
+    const getUserRepos = async (login) => {
+        setLoading()
+
+        const reponse = await fetch(`${GITHUB_URL}/users/${login}/repos`, {
+            headers: {
+                Authorization: `token ${GITHUB_TOKEN}`
+            }
+        })
+
+        const data = await reponse.json()
+
+        dispatch({
+            type: 'GET_REPOS',
+            payload: data
+        })
+
+    }
+
     return <GithubContext.Provider value={{
         users: state.users,
         loading: state.loading,
         user: state.user,
+        repos: state.repos,
         searchUsers,
         clearUsers,
-        getUser
+        getUser,
+        getUserRepos
     }}>
         {children}
     </GithubContext.Provider>

@@ -1,10 +1,4 @@
-import {
-  FaCode,
-  FaCodepen,
-  FaStore,
-  FaUserFriends,
-  FaUsers,
-} from 'react-icons/fa';
+import { FaCodepen, FaUserFriends, FaUsers } from 'react-icons/fa';
 import { useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Loader from '../components/layout/Loader';
@@ -23,7 +17,6 @@ function User() {
   const {
     name,
     type,
-    login,
     avatar_url,
     location,
     bio,
@@ -33,7 +26,6 @@ function User() {
     followers,
     following,
     public_repos,
-    public_gists,
     hireable,
   } = user;
 
