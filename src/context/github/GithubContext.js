@@ -9,12 +9,16 @@ const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN
 export const GithubProvider = ({ children }) => {
     const initialState = {
         users: [],
+        user: {},
         loading: false
     }
     const [state, dispatch] = useReducer(GithubReducer, initialState)
     const setLoading = () => dispatch({ type: 'SET_LOADING' })
     const clearUsers = () => dispatch({ type: 'CLEAR_USERS' })
 
+    // Search Users
+    //implements the search functionality for finding users from GitHub
+    // e.g. api.github.com/search/users?q=cindy *}
     const searchUsers = async (text) => {
         setLoading()
         const params = new URLSearchParams({
@@ -34,11 +38,37 @@ export const GithubProvider = ({ children }) => {
         })
     }
 
+    // Get User
+    //fetch data for a single user from GitHub
+    const getUser = async (login) => {
+        setLoading()
+
+        const reponse = await fetch(`${GITHUB_URL}/users/${login}`, {
+            headers: {
+                Authorization: `token ${GITHUB_TOKEN}`
+            }
+        })
+
+        //if the user is not found, redirect to the not-found page
+        if (Response.status === 404) {
+            window.location = '/not-found'
+        } else {
+            const data = await reponse.json()
+            //dispatch is a function that we can use to dispatch objects to the reducer
+            dispatch({
+                type: 'GET_USER',
+                payload: data
+            })
+        }
+    }
+
     return <GithubContext.Provider value={{
         users: state.users,
         loading: state.loading,
+        user: state.user,
         searchUsers,
-        clearUsers
+        clearUsers,
+        getUser
     }}>
         {children}
     </GithubContext.Provider>
