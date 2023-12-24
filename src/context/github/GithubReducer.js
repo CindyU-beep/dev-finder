@@ -11,7 +11,7 @@ const GithubReducer = (state, action) => {
                 ...state,
                 loading: true
             }
-        default: 
+        default:
             return state
     }
 }
