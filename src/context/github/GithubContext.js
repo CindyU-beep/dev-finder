@@ -13,11 +13,12 @@ export const GithubProvider = ({ children }) => {
     }
     const [state, dispatch] = useReducer(GithubReducer, initialState)
     const setLoading = () => dispatch({ type: 'SET_LOADING' })
+    const clearUsers = () => dispatch({ type: 'CLEAR_USERS' })
 
     const searchUsers = async (text) => {
         setLoading()
         const params = new URLSearchParams({
-            q: text 
+            q: text
         })
         const reponse = await fetch(`${GITHUB_URL}/search/users?${params}`, {
             headers: {
@@ -36,7 +37,8 @@ export const GithubProvider = ({ children }) => {
     return <GithubContext.Provider value={{
         users: state.users,
         loading: state.loading,
-        searchUsers
+        searchUsers,
+        clearUsers
     }}>
         {children}
     </GithubContext.Provider>
