@@ -2,9 +2,9 @@
 
 Link: https://dev-finder-lovat.vercel.app/
 
-# Getting Started with Create React App
+This project uses:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Tailwind and DaisyUI
 
 ## Available Scripts
 

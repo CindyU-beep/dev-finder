@@ -18,7 +18,7 @@ function Navbar({ title }) {
             Home
           </Link>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-s">
           <Link to="/about" className="btn btn-ghost btn-sm rounded-btn">
             About
           </Link>
