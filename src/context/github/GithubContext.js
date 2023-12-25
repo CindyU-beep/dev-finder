@@ -17,28 +17,6 @@ export const GithubProvider = ({ children }) => {
     const setLoading = () => dispatch({ type: 'SET_LOADING' })
     const clearUsers = () => dispatch({ type: 'CLEAR_USERS' })
 
-    // Search Users
-    //implements the search functionality for finding users from GitHub
-    // e.g. api.github.com/search/users?q=cindy *}
-    const searchUsers = async (text) => {
-        setLoading()
-        const params = new URLSearchParams({
-            q: text
-        })
-        const reponse = await fetch(`${GITHUB_URL}/search/users?${params}`, {
-            headers: {
-                Authorization: `token ${GITHUB_TOKEN}`
-            }
-        })
-
-        const { items } = await reponse.json()
-        //dispatch is a function that we can use to dispatch objects to the reducer
-        dispatch({
-            type: 'GET_USERS',
-            payload: items //payload is the data that we want to send to the reducer
-        })
-    }
-
     // Get User
     //fetch data for a single user from GitHub
     const getUser = async (login) => {
@@ -84,15 +62,11 @@ export const GithubProvider = ({ children }) => {
             type: 'GET_REPOS',
             payload: data
         })
-
     }
 
     return <GithubContext.Provider value={{
-        users: state.users,
-        loading: state.loading,
-        user: state.user,
-        repos: state.repos,
-        searchUsers,
+        ...state,
+        dispatch,
         clearUsers,
         getUser,
         getUserRepos

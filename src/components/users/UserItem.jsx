@@ -22,8 +22,7 @@ function UserItem({ user: { login, avatar_url, followers_url } }) {
     };
 
     fetchFollowers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [followers_url]);
 
   return (
     <div className="card shadow-md compact side bg-base-100">

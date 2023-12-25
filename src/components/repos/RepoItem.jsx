@@ -13,13 +13,14 @@ function RepoItem({ repo }) {
     stargazers_count,
   } = repo;
   return (
-    <div className="mb-2 rounded-md card bg-gray-100 hover:bg-gray-300">
+    <a
+      href={html_url}
+      className="mb-2 rounded-md card bg-gray-100 hover:bg-gray-300"
+    >
       <div className="card-body">
         <h3 className="mb-2 text-xl font-semibold">
-          <a href={html_url}>
-            <FaLink className="inline mr-4" />
-            {name}
-          </a>
+          <FaLink className="inline mr-4" />
+          {name}
         </h3>
         <p className="mb-3">{description}</p>
         <div>
@@ -41,7 +42,7 @@ function RepoItem({ repo }) {
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 
