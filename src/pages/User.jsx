@@ -3,17 +3,19 @@ import { useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Loader from '../components/layout/Loader';
 import GithubContext from '../context/github/GithubContext';
-
+import RepoList from '../components/repos/RepoList';
 function User() {
-  const { getUser, user, loading } = useContext(GithubContext);
+  const { getUser, getUserRepos, user, repos, loading } =
+    useContext(GithubContext);
   const params = useParams();
 
   useEffect(() => {
     getUser(params.login);
-    // getUserRepos(params.login);
+    getUserRepos(params.login);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); //[] arg ensures it only runs once
 
-  //user object
+  //User object
   const {
     name,
     type,
@@ -139,6 +141,7 @@ function User() {
           </div>
         </div>
       </div>
+      <RepoList repos={repos} />
     </div>
   );
 }
