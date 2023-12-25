@@ -4,16 +4,24 @@ import { useParams, Link } from 'react-router-dom';
 import Loader from '../components/layout/Loader';
 import GithubContext from '../context/github/GithubContext';
 import RepoList from '../components/repos/RepoList';
+import { getUser, getUserRepos } from '../context/github/GithubActions';
 function User() {
-  const { getUser, getUserRepos, user, repos, loading } =
-    useContext(GithubContext);
+  const { user, repos, dispatch, loading } = useContext(GithubContext);
   const params = useParams();
 
   useEffect(() => {
-    getUser(params.login);
-    getUserRepos(params.login);
+    dispatch({ type: 'SET_LOADING' });
+    const getUserData = async () => {
+      const userData = await getUser(params.login);
+      dispatch({ type: 'GET_USER', payload: userData });
+
+      const userRepoData = await getUserRepos(params.login);
+      dispatch({ type: 'GET_REPOS', payload: userRepoData });
+    };
+
+    getUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); //[] arg ensures it only runs once
+  }, [dispatch, params.login]); // Only run when dispatch changes
 
   //User object
   const {
